@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness App</title>
+</head>
+<body>
+    <h1>Fitness Routine Tracker</h1>
+
+    <!-- Step 1: Add Exercise and Duration -->
+    <h2>Add Your Exercise</h2>
+    <label for="exerciseName">Exercise Name:</label>
+    <input type="text" id="exerciseName" placeholder="E.g., Pushups"><br><br>
+
+    <label for="exerciseDuration">Duration (minutes):</label>
+    <input type="number" id="exerciseDuration" placeholder="E.g., 15"><br><br>
+
+    <button id="addExerciseBtn">Add Exercise</button>
+
+    <!-- Display Total Exercises and Duration -->
+    <h3>Exercises Added:</h3>
+    <ul id="exerciseList"></ul>
+    <p id="totalExercises"></p>
+    <p id="totalDuration"></p>
+
+    <!-- Suggested Exercise -->
+    <h3>Suggested Exercise:</h3>
+    <p id="suggestedExercise"></p>
+
+    <!-- Step 4: Complete Routine Button -->
+    <button id="completeBtn">Complete Routine</button>
+
+    <!-- Step 5: Full Week Routine Button -->
+    <button id="weekRoutineBtn">Show Full Week Routine</button>
+    <ul id="weekRoutine"></ul>
+
+    <script>
+        // Step 1: Add Exercise and Duration
+        const exercises = [];  // Store all exercises
+        let totalDuration = 0;
+
+        document.getElementById('addExerciseBtn').addEventListener('click', function() {
+            const exerciseName = document.getElementById('exerciseName').value;
+            const exerciseDuration = parseInt(document.getElementById('exerciseDuration').value);
+
+            if (exerciseName && exerciseDuration) {
+                // Add exercise to the array
+                exercises.push({ name: exerciseName, duration: exerciseDuration });
+                totalDuration += exerciseDuration;
+
+                // Update the exercise list and total duration on the page
+                const li = document.createElement('li');
+                li.textContent = `${exerciseName}: ${exerciseDuration} mins`;
+                document.getElementById('exerciseList').appendChild(li);
+
+                document.getElementById('totalExercises').textContent = `Total Exercises: ${exercises.length}`;
+                document.getElementById('totalDuration').textContent = `Total Duration: ${totalDuration} mins`;
+
+                // Show a suggested exercise (for example, next one can be "Stretching")
+                document.getElementById('suggestedExercise').textContent = 'Suggested next: Stretching for 10 mins';
+
+                // Clear input fields
+                document.getElementById('exerciseName').value = '';
+                document.getElementById('exerciseDuration').value = '';
+            }
+        });
+
+        // Step 4: Complete Routine - Show congratulatory message
+        document.getElementById('completeBtn').addEventListener('click', function() {
+            alert("Congratulations, you’ve completed your routine!");
+        });
+
+        // Step 5: Full Week Routine Button
+        document.getElementById('weekRoutineBtn').addEventListener('click', function() {
+            const weeklyExercises = [
+                { day: 'Monday', exercise: 'Running', duration: 30 },
+                { day: 'Tuesday', exercise: 'Pushups', duration: 15 },
+                { day: 'Wednesday', exercise: 'Yoga', duration: 45 },
+                { day: 'Thursday', exercise: 'Squats', duration: 20 },
+                { day: 'Friday', exercise: 'Cycling', duration: 60 },
+                { day: 'Saturday', exercise: 'Swimming', duration: 40 },
+                { day: 'Sunday', exercise: 'Rest', duration: 0 }
+            ];
+
+            // Display the full week routine
+            const weekRoutineList = document.getElementById('weekRoutine');
+            weekRoutineList.innerHTML = '';  // Clear previous data
+            weeklyExercises.forEach((item) => {
+                const li = document.createElement('li');
+                li.textContent = `${item.day}: ${item.exercise} (${item.duration} mins)`;
+                weekRoutineList.appendChild(li);
+            });
+        });
+    </script>
+</body>
+</html>
